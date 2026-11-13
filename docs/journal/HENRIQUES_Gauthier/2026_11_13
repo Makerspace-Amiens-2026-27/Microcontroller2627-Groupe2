@@ -1,0 +1,20 @@
+---
+layout: default
+title: "2026-11-13 : Microcontroller"
+parent: HENRIQUES_Gauthier
+grand_parent: Journal de bord
+---
+
+ESP32-S3 branché, led clignote
+[Video led clignote]
+
+Teleplot installer
+
+test teleplot
+![alt text](../../assets/images/teleplot_sin_cos.png)
+
+BOUTON : état HIGH au repos, LOW à l'appuie
+
+Test antirebond, ça fonctionne.
+
+Probleme : fatal error en flashant l'esp32 s3, J'ai tenter des trucs, mais le probleme vient surement du stub 
