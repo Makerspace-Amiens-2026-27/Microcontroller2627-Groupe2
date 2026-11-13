@@ -12,7 +12,7 @@ title: Équipe et rôles
 > s'assure que sa partie avance, le backup peut prendre le relais en cas d'absence.
 > Voir [Constituer et organiser son équipe](https://doc.makerspace-amiens.fr/workshops/methodologie-de-projet/concepts/constituer-organiser-equipe/).
 
-## Membres
+## Membresx²
 
 {: .a_modifier }
 > Une ligne par membre. Le compte GitHub permet de relier chacun à ses contributions.
