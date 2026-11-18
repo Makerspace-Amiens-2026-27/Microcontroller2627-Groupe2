@@ -1,65 +1,27 @@
-#include <Arduino.h>
+#include <Spi.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
 #include "config.h"
 
-constexpr int PRESSED_LEVEL = LOW;           // niveau lu quand on appuie (étape 1)
-constexpr unsigned long DEBOUNCE_MS = 30;
-constexpr int JOYSTICK_DEADZONE = 300;
-int joystickCenterX = 2048;
-
-struct Button {
-    int pin;
-    int stableLevel;              // dernier niveau confirmé
-    int lastRead;                 // dernière lecture brute
-    unsigned long lastChangeMs;   // date du dernier mouvement du signal
-};
-
-Button button = {PIN_BUTTON, !PRESSED_LEVEL, !PRESSED_LEVEL, 0};
-
-// Renvoie true une seule fois par appui, au moment où il est confirmé
-bool justPressed(Button& b) {
-    int level = digitalRead(b.pin);
-    if (level != b.lastRead) {         // le signal bouge : rebond ou vrai changement
-        b.lastRead = level;
-        b.lastChangeMs = millis();
-    }
-    if (millis() - b.lastChangeMs > DEBOUNCE_MS && level != b.stableLevel) {
-        b.stableLevel = level;         // stable depuis 30 ms : changement confirmé
-        return level == PRESSED_LEVEL; // vrai sur l'appui, faux sur le relâchement
-    }
-    return false;
-}
-
-void calibrateJoystick() {
-    long sum = 0;
-    for (int i = 0; i < 16; i++) {
-        sum += analogRead(PIN_JOYSTICK_X);
-        delay(2);
-    }
-    joystickCenterX = sum / 16;
-}
-
-// Convertit une lecture brute (0..4095) en valeur entre -1.0 et +1.0
-float normalizeJoystick(int raw, int center) {
-    int offset = raw - center;
-    if (abs(offset) < JOYSTICK_DEADZONE) {
-        return 0.0f;
-    }
-    int range = (offset > 0) ? (4095 - center) : center;
-    return constrain((float)offset / range, -1.0f, 1.0f);
-}
+Adafruit_ST7789 tft(&SPI, PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RESET);
 
 void setup() {
     Serial.begin(115200);
-    pinMode(PIN_BUTTON, INPUT_PULLUP);
-    calibrateJoystick();
+    delay(1000);
+    
+    SPI.begin(PIN_TFT_SCK, -1, PIN_TFT_MOSI, PIN_TFT_CS); // pas de MISO
+    tft.init(140, 320, SPI_MODE3);
+    tft.setRotation(2); //portrait
+    tft.fillScreen(ST77XX_BLACK);
+
+    tft.setTextSize(4);
+    tft.setTextColor(ST77XX_WHITE);
+    tft.setCursor(72, 40);
+    tft.print("PONG");
+
+    tft.drawRect(20, 120, 200, 60, ST77XX_WHITE); // rectangle
+    tft.fillCircle(120, 250, 20, ST77XX_YELLOW); // disque
 }
 
 void loop() {
-    static int count = 0;
-    if (justPressed(button)) {
-        count++;
-        Serial.printf("Appui n°%d\n", count);
-    }
-    Serial.printf("Joystick X: %.2f\n", normalizeJoystick(analogRead(PIN_JOYSTICK_X), joystickCenterX));
-    delay(20);
 }
