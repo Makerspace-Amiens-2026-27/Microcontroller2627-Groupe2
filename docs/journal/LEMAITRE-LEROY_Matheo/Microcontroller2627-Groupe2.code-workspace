@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"name": "Microcontroleur",
+			"path": "../../../project/firmware/Microcontroleur"
+		}
+	],
+	"settings": {}
+}
