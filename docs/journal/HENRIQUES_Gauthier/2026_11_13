@@ -17,4 +17,4 @@ BOUTON : état HIGH au repos, LOW à l'appuie
 
 Test antirebond, ça fonctionne.
 
-Probleme : fatal error en flashant l'esp32 s3, J'ai tenter des trucs, mais le probleme vient surement du stub 
+Probleme : fatal error en flashant l'esp32 s3, J'ai tenter des trucs, mais le probleme vient surement du stub  
