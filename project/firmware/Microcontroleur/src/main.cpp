@@ -89,17 +89,18 @@ void setup() {
 
 
     tft.setRotation(2); //portrait
-
     
-    tft.fillScreen(ST77XX_BLACK);
+    tft.invertDisplay(false);
+    
+    tft.fillScreen(ST77XX_WHITE);
 
     tft.setTextSize(4);
-    tft.setTextColor(ST77XX_WHITE);
+    tft.setTextColor(ST77XX_BLACK);
     tft.setCursor(72, 40);
     tft.print("PONG");
 
-    tft.drawRect(20, 120, 200, 60, ST77XX_WHITE); // rectangle
-    tft.fillCircle(120,250,20,COULEUR(ST77XX_YELLOW)); // cercle jaune
+    tft.drawRect(20, 120, 200, 60, ST77XX_BLACK); // rectangle
+    tft.fillCircle(120,250,20,ST77XX_YELLOW); // cercle jaune
 }
 
 void loop() {
